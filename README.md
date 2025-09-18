@@ -1,281 +1,305 @@
-# Complete Dhan MCP Server - Production Ready
+# Dhan MCP Server
 
-## 🎯 **Project Completion Summary**
+A comprehensive Model Context Protocol (MCP) server for seamless integration with the Dhan trading platform API. This production-ready server provides complete trading functionality, market data access, and portfolio management through the MCP protocol.
 
-This MCP server provides **complete integration** with the Dhan trading platform API, offering all major trading and market data functionalities through the Model Context Protocol.
+## 🚀 Features
 
-## 📊 **Complete Feature Matrix**
+### Trading Operations
+- **Order Management**: Place, modify, and cancel orders with full lifecycle tracking
+- **Order Types**: Market, Limit, Stop Loss, and Stop Loss Market orders
+- **Product Types**: CNC, Intraday, Margin, MTF, Cover Order (CO), and Bracket Order (BO)
+- **Slice Orders**: Automatic handling of large orders above freeze limits
+- **Margin Calculator**: Pre-trade margin requirement calculations
 
-### **Account Management (3 Tools)**
-| Tool | Functionality | Status |
-|------|---------------|---------|
-| `get_profile()` | User profile and account information | ✅ Complete |
-| `validate_token()` | Access token validation and expiry | ✅ Complete |
-| `get_fund_limits()` | Account balance and margin information | ✅ Complete |
+### Market Data
+- **Live Prices**: Real-time Last Traded Price (LTP) for multiple instruments
+- **OHLC Data**: Open, High, Low, Close with volume information
+- **Market Depth**: Full order book with bid/ask levels
+- **Historical Data**: Daily and intraday OHLC data with customizable intervals
 
-### **Trading Operations (4 Tools)**
-| Tool | Functionality | Status |
-|------|---------------|---------|
-| `place_order({...})` | Place new orders (all types & products) | ✅ Complete |
-| `modify_order({...})` | Modify pending orders | ✅ Complete |
-| `cancel_order({orderId})` | Cancel pending orders | ✅ Complete |
-| `slice_order({...})` | Handle large quantity orders | ✅ Complete |
+### Account Management
+- **Profile Information**: Complete user profile and account details
+- **Fund Limits**: Available balance, margins, and buying power
+- **Trade History**: Detailed trade execution records
+- **Ledger Reports**: Account statement with credit/debit entries
 
-### **Order & Trade Tracking (5 Tools)**
-| Tool | Functionality | Status |
-|------|---------------|---------|
-| `get_orders()` | Current day's order book | ✅ Complete |
-| `get_order_by_id({orderId})` | Specific order details | ✅ Complete |
-| `get_order_by_correlation_id({correlationId})` | Find order by custom ID | ✅ Complete |
-| `get_trades()` | Current day's executed trades | ✅ Complete |
-| `get_trades_by_order_id({orderId})` | Trades for specific order | ✅ Complete |
+### Instrument Master
+- **Search Instruments**: Find stocks, derivatives, and commodities by name
+- **Complete Master**: Access to full instrument database
+- **Multiple Exchanges**: Support for NSE, BSE, and MCX segments
 
-### **Risk Management (1 Tool)**
-| Tool | Functionality | Status |
-|------|---------------|---------|
-| `calculate_margin({...})` | Pre-trade margin calculation | ✅ Complete |
+## 📦 Installation
 
-### **Market Data (3 Tools)**
-| Tool | Functionality | Status |
-|------|---------------|---------|
-| `get_market_ltp({...})` | Live last traded prices | ✅ Complete |
-| `get_market_ohlc({...})` | OHLC data with volume | ✅ Complete |
-| `get_market_depth({...})` | Full market depth & order book | ✅ Complete |
+### Prerequisites
+- Python 3.10 or higher
+- Dhan trading account with API access
+- Valid Dhan API access token
 
-### **Historical Data & Analysis (3 Tools)**
-| Tool | Functionality | Status |
-|------|---------------|---------|
-| `get_historical_data({...})` | Daily OHLC historical data | ✅ Complete |
-| `get_intraday_data({...})` | Minute-level intraday data | ✅ Complete |
+### Quick Setup
 
-### **Statement & Reports (2 Tools)**
-| Tool | Functionality | Status |
-|------|---------------|---------|
-| `get_ledger({from_date, to_date})` | Account ledger reports | ✅ Complete |
-| `get_historical_trades({...})` | Historical trade analysis | ✅ Complete |
+1. **Clone the repository**
+```bash
+git clone https://github.com/yourusername/dhan-mcp-server.git
+cd dhan-mcp-server
+```
 
-### **Instrument Master Data (2 Tools)**
-| Tool | Functionality | Status |
-|------|---------------|---------|
-| `get_instrument_master({...})` | Complete instrument list | ✅ Complete |
-| `search_instruments({query})` | Search instruments by name | ✅ Complete |
+2. **Run automated setup**
+```bash
+python setup.py
+```
 
-## 📈 **Total Implementation: 22 Complete Tools**
+3. **Configure environment**
+```bash
+cp .env.example .env
+# Edit .env and add your DHAN_ACCESS_TOKEN
+# Edit .env and add you DHAN_CLIENT_ID
+```
 
-## 🏗️ **Technical Architecture**
+4. **Start the server**
+```bash
+# On Linux/macOS
+./run_server.sh
 
-### **Core Components**
+# On Windows
+run_server.bat
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+Create a `.env` file with the following:
+
+```env
+DHAN_ACCESS_TOKEN=your_dhan_api_access_token_here
+DHAN_CLIENT_ID=your_dhan_client_id_here
+```
+
+### Claude/MCP Client Setup
+Add to your MCP client configuration:
+
+```json
+{
+    "mcpServers": {
+        "dhan-mcp-server": {
+            "command": "path/to/your/dhan-mcp-server/run_server.sh",
+            "args": []
+        }
+    }
+}
+```
+
+## 🛠️ Available Tools
+
+### Account Management
+- `get_profile()` - User profile and account information
+- `validate_token()` - Access token validation and expiry
+- `get_fund_limits()` - Account balance and margin information
+
+### Trading Operations
+- `place_order({...})` - Place new orders (all types & products)
+- `modify_order({...})` - Modify pending orders
+- `cancel_order({orderId})` - Cancel pending orders
+- `slice_order({...})` - Handle large quantity orders
+
+### Order & Trade Tracking
+- `get_orders()` - Current day's order book
+- `get_order_by_id({orderId})` - Specific order details
+- `get_order_by_correlation_id({correlationId})` - Find order by custom ID
+- `get_trades()` - Current day's executed trades
+- `get_trades_by_order_id({orderId})` - Trades for specific order
+
+### Risk Management
+- `calculate_margin({...})` - Pre-trade margin calculation
+
+### Market Data
+- `get_market_ltp({...})` - Live last traded prices
+- `get_market_ohlc({...})` - OHLC data with volume
+- `get_market_depth({...})` - Full market depth & order book
+
+### Historical Data
+- `get_historical_data({...})` - Daily OHLC historical data
+- `get_intraday_data({...})` - Minute-level intraday data
+
+### Reports & Statements
+- `get_ledger({from_date, to_date})` - Account ledger reports
+- `get_historical_trades({...})` - Historical trade analysis
+
+### Instrument Master Data
+- `get_instrument_master({...})` - Complete instrument list
+- `search_instruments({query})` - Search instruments by name
+
+## 📋 Usage Examples
+
+### Place a Market Order
+```python
+# Place a buy order for 100 shares of RELIANCE
+place_order({
+    "dhanClientId": "your_client_id",
+    "transactionType": "BUY",
+    "exchangeSegment": "NSE_EQ",
+    "productType": "CNC",
+    "orderType": "MARKET",
+    "validity": "DAY",
+    "securityId": "2885",  # RELIANCE security ID
+    "quantity": 100
+})
+```
+
+### Get Market Data
+```python
+# Get live price for multiple stocks
+get_market_ltp({
+    "client_id": "your_client_id",
+    "instruments": {
+        "NSE_EQ": ["2885", "1333"]  # RELIANCE, INFY
+    }
+})
+```
+
+### Calculate Margin
+```python
+# Check margin requirement before placing order
+calculate_margin({
+    "dhanClientId": "your_client_id",
+    "exchangeSegment": "NSE_EQ",
+    "transactionType": "BUY",
+    "quantity": 100,
+    "productType": "INTRADAY",
+    "securityId": "2885",
+    "price": 2500
+})
+```
+
+## 🏗️ Technical Architecture
+
+### Core Components
 - **MCP Server**: Full Model Context Protocol implementation
-- **API Client**: Async HTTP client with error handling
-- **Data Models**: 15+ Pydantic models with validation
-- **Type Safety**: Complete enum definitions and validation
-- **Error Handling**: Comprehensive API error management
+- **API Client**: Async HTTP client with comprehensive error handling
+- **Data Models**: 15+ Pydantic models with complete validation
+- **Type Safety**: Full enum definitions and input validation
+- **Error Handling**: Production-grade API error management
 
-### **Development Features**
-- **Setup Automation**: One-command installation
-- **Cross-Platform**: Unix/Windows run scripts
-- **Testing Framework**: Pytest with async support
-- **Code Quality**: Black, isort, mypy, flake8
-- **Documentation**: Complete API reference and examples
+### Security Features
+- **Environment Variables**: Secure token storage
+- **Input Validation**: Comprehensive Pydantic validation
+- **Error Sanitization**: Safe error message handling
+- **Rate Limiting**: API rate limit compliance
 
-### **Production Ready**
-- **Security**: Environment-based token management
-- **Rate Limiting**: Built-in API rate limit awareness
-- **Logging**: Comprehensive logging and monitoring
-- **Deployment**: Docker and systemd configurations
+## 🧪 Development
 
-## 🚀 **Ready-to-Deploy Package**
-
-### **Project Structure**
+### Project Structure
 ```
 dhan-mcp-server/
 ├── dhan_mcp_server/           # Core implementation
-│   ├── server.py              # Main MCP server (800+ lines)
-│   ├── models.py              # Pydantic models (400+ lines)
+│   ├── server.py              # Main MCP server
+│   ├── models.py              # Pydantic data models
 │   └── utils.py               # Utility functions
 ├── examples/
-│   └── example_usage.py       # Comprehensive examples
-├── tests/                     # Test framework setup
-├── setup.py                   # Automated setup script
-├── run_server.sh/.bat         # Cross-platform run scripts
-├── pyproject.toml             # Modern Python packaging
-├── README.md                  # Complete documentation
-└── .env.example               # Configuration template
+│   └── example_usage.py       # Usage examples
+├── tests/                     # Test suite
+├── setup.py                   # Automated setup
+├── run_server.sh/.bat         # Cross-platform scripts
+├── pyproject.toml            # Modern Python packaging
+├── README.md                 # This file
+└── .env.example              # Configuration template
 ```
 
-## 💰 **Business Value**
-
-### **Trading Capabilities**
-- **Complete Order Lifecycle**: Place → Modify → Cancel → Track
-- **Risk Management**: Margin calculation before execution
-- **Portfolio Tracking**: Real-time positions and performance
-- **Market Analysis**: Live data and historical analysis
-
-### **Integration Ready**
-- **AI Model Integration**: MCP protocol for AI trading systems
-- **Algorithmic Trading**: Programmatic order management
-- **Data Analysis**: Historical data for backtesting
-- **Risk Management**: Real-time margin and fund monitoring
-
-### **Production Features**
-- **Scalability**: Async architecture for high performance
-- **Reliability**: Comprehensive error handling and validation
-- **Security**: Production-grade token and secret management
-- **Monitoring**: Complete audit trail and logging
-
-## 📋 **API Coverage**
-
-### **Dhan API Endpoints Implemented**
-| Category | Endpoints | Coverage |
-|----------|-----------|----------|
-| **Profile** | `/profile` | ✅ 100% |
-| **Orders** | `/orders/*` (7 endpoints) | ✅ 100% |
-| **Funds** | `/fundlimit`, `/margincalculator` | ✅ 100% |
-| **Market Data** | `/marketfeed/*` (3 endpoints) | ✅ 100% |
-| **Historical** | `/charts/*` (2 endpoints) | ✅ 100% |
-| **Statements** | `/ledger`, `/trades/*` | ✅ 100% |
-| **Instruments** | `/instrument/*`, CSV endpoints | ✅ 100% |
-
-**Total: 16+ API endpoints fully implemented**
-
-## 🔒 **Security & Compliance**
-
-### **Security Features**
-- **Token Security**: Environment variable storage
-- **Input Validation**: Comprehensive Pydantic validation
-- **Error Sanitization**: Safe error message handling
-- **Rate Limiting**: API limit compliance
-
-### **Trading Safety**
-- **Margin Validation**: Pre-trade risk assessment
-- **Order Tracking**: Complete audit trail with correlation IDs
-- **Fund Monitoring**: Real-time balance checking
-- **Error Recovery**: Graceful handling of API failures
-
-## 🎯 **Ready for Production Use**
-
-## 🎯 **Ready for Production Use**
-
-### **Immediate Use Cases**
-1. **Algorithmic Trading**: Automated order execution with risk management
-2. **Portfolio Management**: Real-time position tracking and performance analysis
-3. **Market Research**: Historical data analysis and backtesting strategies
-4. **Risk Assessment**: Pre-trade margin calculations and fund monitoring
-5. **Trading Analytics**: Complete audit trail and trade performance analysis
-
-### **Integration Scenarios**
-- **AI Trading Models**: Direct integration with language models via MCP
-- **Trading Bots**: Programmatic order management and execution
-- **Risk Management Systems**: Real-time margin and exposure monitoring
-- **Data Analysis Platforms**: Historical data for quantitative analysis
-- **Compliance Systems**: Complete audit trail and transaction logging
-
-## 🛠️ **Setup & Deployment**
-
-### **Quick Start (30 seconds)**
+### Development Setup
 ```bash
-# Clone and setup
-git clone https://github.com/yourusername/dhan-mcp-server.git
-cd dhan-mcp-server
-python setup.py
+# Install development dependencies
+pip install -e ".[dev]"
 
-# Configure token
-cp .env.example .env
-# Edit .env with your DHAN_ACCESS_TOKEN
+# Run tests
+pytest
 
-# Start server
-./run_server.sh
+# Format code
+black .
+isort .
+
+# Type checking
+mypy dhan_mcp_server/
 ```
 
-### **Production Deployment Options**
-- **Docker Container**: Ready-to-deploy Docker configuration
-- **Systemd Service**: Linux service for 24/7 operation
-- **Cloud Deployment**: AWS/GCP/Azure compatible
-- **Kubernetes**: Scalable container orchestration ready
+## 🚦 API Coverage
 
-## 📊 **Performance Characteristics**
+Complete implementation of all major Dhan API endpoints:
 
-### **API Coverage**
-- **100% Dhan API Coverage**: All documented endpoints implemented
-- **Rate Limit Compliant**: Built-in respect for API limitations
-- **Error Resilient**: Comprehensive error handling and recovery
+| Category | Coverage |
+|----------|----------|
+| Profile & Authentication | ✅ 100% |
+| Orders & Trading | ✅ 100% |
+| Market Data | ✅ 100% |
+| Historical Data | ✅ 100% |
+| Account Information | ✅ 100% |
+| Instrument Master | ✅ 100% |
 
-### **Technical Performance**
-- **Async Architecture**: High-performance concurrent operations
-- **Type Safety**: 100% type-annotated with Pydantic validation
-- **Memory Efficient**: Optimized for production workloads
-- **Logging Complete**: Full audit trail and monitoring support
+**Total: 22 production-ready tools**
 
-## 🔧 **Development Excellence**
+## 🔒 Security & Compliance
 
-### **Code Quality Metrics**
-- **Lines of Code**: 2000+ lines of production-ready Python
-- **Test Coverage**: Comprehensive test framework setup
-- **Type Safety**: 100% mypy compliance
-- **Documentation**: Complete API reference and examples
+- **Token Security**: Environment-based secure storage
+- **Input Validation**: Comprehensive data validation
+- **Error Handling**: Safe error message sanitization
+- **Trading Safety**: Pre-trade risk assessment and validation
+- **Audit Trail**: Complete transaction logging
 
-### **Development Tools**
-- **Automated Setup**: One-command installation and configuration
-- **Cross-Platform**: Windows, macOS, Linux support
-- **CI/CD Ready**: GitHub Actions workflow templates
-- **Code Quality**: Black, isort, flake8, mypy integration
+## 📊 Production Deployment
 
-## 🚀 **GitHub Repository Ready**
+### Docker Deployment
+```dockerfile
+FROM python:3.10
+COPY . /app
+WORKDIR /app
+RUN pip install -e .
+CMD ["python", "-m", "dhan_mcp_server.server"]
+```
 
-### **Repository Features**
-- **Professional Structure**: Industry-standard project organization
-- **Complete Documentation**: README, API docs, examples
-- **Security Best Practices**: Proper secret management and validation
-- **Community Ready**: Issue templates, contributing guidelines
+### Systemd Service
+```ini
+[Unit]
+Description=Dhan MCP Server
+After=network.target
 
-### **Deployment Instructions**
-1. **Create GitHub Repository**: `dhan-mcp-server`
-2. **Upload All Files**: Complete project structure
-3. **Configure Secrets**: Set up access tokens securely
-4. **Add CI/CD**: Automated testing and deployment
-5. **Release v0.1.0**: Tag first production release
+[Service]
+Type=simple
+User=dhan
+WorkingDirectory=/opt/dhan-mcp-server
+Environment=PATH=/opt/dhan-mcp-server/venv/bin
+ExecStart=/opt/dhan-mcp-server/venv/bin/python -m dhan_mcp_server.server
+Restart=always
 
-## 📈 **Business Impact**
+[Install]
+WantedBy=multi-user.target
+```
 
-### **Cost Savings**
-- **Development Time**: Months of API integration work completed
-- **Maintenance**: Production-ready with comprehensive error handling  
-- **Testing**: Complete validation and type safety built-in
-- **Documentation**: Comprehensive guides and examples provided
+## 🤝 Contributing
 
-### **Revenue Opportunities**
-- **Algorithmic Trading**: Enable automated trading strategies
-- **Data Analysis**: Historical data for quantitative research
-- **Risk Management**: Real-time margin and exposure monitoring
-- **Portfolio Optimization**: Complete position and performance tracking
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 🎯 **Conclusion: Production-Ready Trading Infrastructure**
+## 📝 License
 
-The Dhan MCP Server represents a **complete trading infrastructure** solution:
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-**✅ All 22 Tools Implemented**
-**✅ Complete API Coverage** 
-**✅ Production Security**
-**✅ Type-Safe Architecture**
-**✅ Comprehensive Documentation**
-**✅ Ready for GitHub Release**
+## ⚠️ Disclaimer
 
-This is a **professional-grade trading system** that provides:
-- Complete order management lifecycle
-- Real-time market data access
-- Comprehensive risk management
-- Historical data analysis capabilities
-- Production-ready deployment options
+This software is for educational and development purposes. Trading in financial markets involves substantial risk of loss. Users should thoroughly test all functionality in a paper trading environment before using with real capital. The authors are not responsible for any financial losses incurred through the use of this software.
 
-The system is immediately usable for algorithmic trading, portfolio management, market research, and risk assessment. It provides a solid foundation for building sophisticated trading applications on the Dhan platform while maintaining the highest standards of security, reliability, and performance.
+## 📞 Support
 
-**Ready for production deployment and GitHub release.**
+- **Documentation**: [API Reference](docs/api.md)
+- **Issues**: [GitHub Issues](https://github.com/yourusername/dhan-mcp-server/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/yourusername/dhan-mcp-server/discussions)
 
-## 🚦 **Next Steps**
+## 🔗 Links
 
-1. **Upload to GitHub**: Create repository and upload complete codebase
-2. **Release v0.1.0**: Tag and release first production version
-3. **Community Engagement**: Share with trading and developer communities
-4. **Continuous Enhancement**: Monitor usage and add requested features
+- [Dhan API Documentation](https://dhanhq.co/docs/)
+- [Model Context Protocol](https://modelcontextprotocol.io/)
+- [Anthropic Claude](https://www.anthropic.com/claude)
 
-This completes the development of a comprehensive, production-ready Dhan MCP Server with full API integration and professional deployment capabilities.
+---
+
+**Made with ❤️ for the trading community**

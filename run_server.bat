@@ -1,52 +1,47 @@
 @echo off
 REM Dhan MCP Server Run Script
-REM Send banners to stderr so they don't break MCP JSON
->&2 echo Dhan MCP Server
->&2 echo ================================
 
-setlocal enabledelayedexpansion
-
-REM Ensure we're in the correct directory
-cd /d "D:\Python_projects\Dhan_mcp_server"
-
-REM Activate virtual environment
-call .venv\Scripts\activate
+echo Dhan MCP Server
+echo ================================
 
 REM Check if .env file exists
-if not exist ".env" (
-    if not exist ".env.example" (
-        >&2 echo Error: Neither .env nor .env.example found
+if not exist .env (
+    if not exist .env.example (
+        echo Error: Neither .env nor .env.example found
         exit /b 1
     )
-    >&2 echo Creating .env file from .env.example...
-    copy ".env.example" ".env" >nul
-    >&2 echo Please edit .env file with your Dhan API credentials
+    echo Creating .env file from .env.example...
+    copy .env.example .env >nul
+    echo Please edit .env file with your Dhan API credentials
     exit /b 1
 )
 
-REM Load variables from .env
-for /f "usebackq tokens=1,* delims==" %%a in (".env") do (
-    if not "%%a"=="" (
-        set "%%a=%%b"
+REM Simple environment variable loading for Windows
+for /f "usebackq delims=" %%a in (".env") do (
+    for /f "tokens=1,2 delims==" %%b in ("%%a") do (
+        if not "%%b"=="" if not "%%c"=="" set "%%b=%%c"
     )
 )
 
 REM Check if DHAN_ACCESS_TOKEN is set
 if "%DHAN_ACCESS_TOKEN%"=="" (
-    >&2 echo Error: Please set DHAN_ACCESS_TOKEN in .env file
+    echo Error: Please set DHAN_ACCESS_TOKEN in .env file
+    echo Get your token from: https://web.dhan.co
     exit /b 1
 )
 
 if "%DHAN_ACCESS_TOKEN%"=="your-dhan-access-token-here" (
-    >&2 echo Error: Please set DHAN_ACCESS_TOKEN in .env file
+    echo Error: Please set DHAN_ACCESS_TOKEN in .env file
+    echo Get your token from: https://web.dhan.co
     exit /b 1
 )
 
->&2 echo Configuration loaded
->&2 echo Access Token: %DHAN_ACCESS_TOKEN:~0,10%***
->&2 echo Starting Dhan MCP Server...
->&2 echo Press Ctrl+C to stop
->&2 echo.
+echo Configuration loaded
+echo Access Token: %DHAN_ACCESS_TOKEN:~0,10%***
+echo.
+echo Starting Dhan MCP Server...
+echo Press Ctrl+C to stop
+echo.
 
-REM Start the server using the activated virtual environment's Python
-python -m dhan_mcp_server.server
+REM Start the server
+uv run python -m dhan_mcp_server.server
